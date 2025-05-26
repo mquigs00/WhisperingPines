@@ -1,12 +1,3 @@
-# React + Vite
+Back when I graduated in 2023, I decided to create a web application to learn about full-stack development and implement what I had learned in Database Design. I had never written in JavaScript, and wasn't familiar with node.js and React. I knew basic SQL commands and had run them in MS SQL Server, but had never fully designed and created a database. I started watching Code with Mash tutorials and any YouTube videos I could find on how to build a web application and learned as I went. Between job searching and trying to learn all fo these things at once I eventually got stuck. Now, I have studied AWS and earned my Solutions Architect Associate certification. I can re-use most of the front end code and deploy a SQL Server database on RDS. I will load the data into RDS from S3 .csv files. Then I plan on launching my app on EC2 instances with a load balancer. I am still currently finishing the database schema and gathering book data.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+You can view my inital repo here: https://github.com/mquigs00/LibrarySim
