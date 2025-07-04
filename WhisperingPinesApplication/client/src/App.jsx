@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import './styles/normalize.css';
+import './styles/styles.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <Header></Header>
+      <main>
+        <section className="library_intro_text">
+          <h1>Welcome to Whispering Pines Library</h1>
+
+          <p>
+            Welcome to the Whispering Pines Library, a serene haven of knowledge
+            and inspiration nestled in Havenbrook. Explore our vast collection,
+            indulge in quiet contemplation, and embark on a journey of discovery
+            within our enchanting walls.
+          </p>
+
+          <p>
+            Whispering Pines Library, established in the late 18th century by
+            reclusive scholar Ambrose Hawthorne, has captivated seekers of
+            knowledge for generations. With its extraordinary collection of rare
+            books and a mystical aura, the library has evolved from a humble cabin
+            to a grand Victorian-style building, becoming a cherished symbol of
+            intellectual exploration in Havenbrook.
+          </p>
+        </section>
+      </main>
+      <Footer></Footer>
+    </div>
+  );
 }
 
-export default App
+export default App;

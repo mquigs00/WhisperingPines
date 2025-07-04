@@ -1,0 +1,13 @@
+/* Home Page Main */
+
+
+
+main {
+    height: 40rem;
+}
+
+.library_intro_text {
+    left: 10rem;
+    position: relative;
+    width: 50rem;
+}
