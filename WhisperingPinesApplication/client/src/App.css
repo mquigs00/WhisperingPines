@@ -5,6 +5,18 @@
   text-align: center;
 }
 
+/* Home Page Main */
+
+main {
+    height: 40rem;
+}
+
+.library_intro_text {
+    left: 10rem;
+    position: relative;
+    width: 50rem;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

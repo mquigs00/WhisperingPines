@@ -31,16 +31,14 @@ header {
 
 .header_login_label {
     clear: left;
-    display: inline-block;
-    margin-left: 5rem;
-    margin-right: 0.2rem;
-    width: 7rem;
+    margin-left: 2rem;
+    padding-right: 0.5rem;
 }
 
 .header_login_bars {
     display: flex;
-    gap: 1rem;
     align-items: center;
+    padding-left: 1rem;
 }
 
 label {
@@ -53,8 +51,7 @@ input {
 }
 
 button {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    width: 6rem;
 }
 
 .navigation_bar {
