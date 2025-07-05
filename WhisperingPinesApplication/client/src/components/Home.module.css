@@ -1,0 +1,45 @@
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
+}
+
+/* Top left quadrant, intro text */
+.library_intro_text {
+    padding-left: 6rem;
+    padding-top: 2rem;
+    box-sizing: border-box;
+}
+
+/* Top right quadrant, will hold a box to search the catalog */
+.top_right_home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search_our_catalog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgray;
+    width: 40%;
+    height: 60%;
+}
+
+.selection {
+    padding-left: 6rem;
+}
+
+/* Bottom right quadrant, will just be an AI picture of a library */
+.bottom_right_home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.library_inside {
+    width: 50%;
+    height: 70%;
+}
