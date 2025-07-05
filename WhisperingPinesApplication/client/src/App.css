@@ -10,17 +10,3 @@
   flex-direction: column;
   min-height: 100vh;
 }
-
-/* Home Page Main */
-
-main {
-    flex: 1;
-    box-sizing: border-box;
-}
-
-.library_intro_text {
-    width: 50rem;
-    padding-left: 6rem;
-    padding-top: 2rem;
-    box-sizing: border-box;
-}
