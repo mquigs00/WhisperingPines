@@ -1,15 +1,15 @@
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
-import './App.css';
-import './styles/normalize.css';
+import Account from './components/Account.jsx';
+import Catalog from './components/Catalog.jsx';
 
 function App() {
   return (
     <div className="app">
       <Header></Header>
       <main>
-        <Home></Home>
+        <Catalog></Catalog>
       </main>
       <Footer></Footer>
     </div>

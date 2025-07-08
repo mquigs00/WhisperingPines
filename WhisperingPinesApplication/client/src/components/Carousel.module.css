@@ -1,0 +1,15 @@
+.carousel_button {
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.carousel_button--left {
+    left: -5.5rem;
+    visibility: hidden;
+}
+
+img {
+    height: 15rem;
+    margin-left: 3rem;
+}

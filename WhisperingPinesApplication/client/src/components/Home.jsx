@@ -29,12 +29,12 @@ const Home = () => {
                     <form action="">
                         <div>
                             <label htmlFor="title">Title:</label>
-                            <input type="text" id="title"/>
+                            <input className={HomeCSS.search_input} type="text" id="title"/>
                         </div>
                         
                         <div>
                             <label htmlFor="author">Author:</label>
-                            <input type="text" id="author"/>
+                            <input className={HomeCSS.search_input} type="text" id="author"/>
                         </div>
 
                         <button type="submit">Search</button>
