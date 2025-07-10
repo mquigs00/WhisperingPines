@@ -3,67 +3,118 @@ import CatalogCSS from './Catalog.module.css';
 const Catalog = () => {
     return (
         <>
-            <div className={CatalogCSS.catalog_sub_header}>
-                <h1>Catalog</h1>
+            <h1 className={CatalogCSS.title}>Search Our Catalog</h1>
+            <div className={CatalogCSS.search_criteria}>
                 <form action="">
-                    <label htmlFor="">Title</label>
-                    <input type="text" />
+                    <label htmlFor="title">Title:</label>
+                    <input type="text" id="title"/>
 
-                    <label htmlFor="">Author</label>
-                    <input type="text" />
+                    <label htmlFor="author">Author:</label>
+                    <input type="text" id="author"/>
+
+                    <label htmlFor="isbn13">ISBN13:</label>
+                    <input type="text" id="isbn13"/>
+
+                    <button>Search</button>
                 </form>
             </div>
             <div className={CatalogCSS.catalog_table}>
                 <table className={CatalogCSS.table}>
-                    <tr>
-                        <th>ISBN13</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Availability</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>ISBN13</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Publisher</th>
+                            <th>Availability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9780060534295</td>
+                            <td>Couldn't Keep It to Myself: Testimonies from Our Imprisoned Sisters</td>
+                            <td>Wally Lamb</td>
+                            <td>HarperCollins Publishers</td>
+                            <td>In</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </>

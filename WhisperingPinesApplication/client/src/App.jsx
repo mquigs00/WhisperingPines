@@ -3,13 +3,14 @@ import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
 import Account from './components/Account.jsx';
 import Catalog from './components/Catalog.jsx';
+import BookPage from './components/BookPage.jsx';
 
 function App() {
   return (
     <div className="app">
       <Header></Header>
       <main>
-        <Catalog></Catalog>
+        <Account></Account>
       </main>
       <Footer></Footer>
     </div>

@@ -1,3 +1,18 @@
-.account_input {
-    margin-bottom: 1rem;
+.account_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+}
+
+.welcome {
+    padding-left: 6rem;
+    box-sizing: border-box;
+}
+
+.checkout_history {
+    grid-row: 1 / span 2;
+}
+
+.table_cell {
+    height: 1.5rem;
 }

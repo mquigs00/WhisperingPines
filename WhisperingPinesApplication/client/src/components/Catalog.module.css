@@ -1,7 +1,14 @@
-.catalog_sub_header {
+.title {
+    text-align: center;
+    font-size: 1em;
+}
+
+.search_criteria {
     display: flex;
     width: 100%;
     align-items: center;
+    justify-content: center;
+    
 }
 
 .catalog_table {
@@ -10,11 +17,24 @@
     width: 100%;
 }
 
+label {
+    margin-left: 2rem;
+}
+
 .table {
-    width: 100%;
+    width: 95%;
     height: 100%;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-overflow: ellipsis;
 }
 
 table, th, td {
     border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    text-align: center;
 }
