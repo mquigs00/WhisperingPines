@@ -47,6 +47,10 @@ The Account page is a grid as such:
     grid-row-end: span 2;
 }
 
+.history_heading {
+    margin-top: 3rem;
+}
+
 .history_cell {
     height: 1.5rem;
 }

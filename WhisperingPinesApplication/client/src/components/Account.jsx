@@ -26,7 +26,7 @@ const Account = () => {
                 </div>
             </section>
             <section className={AccountCSS.checkout_history}>
-                <h2>Checkout History</h2>
+                <h2 className={AccountCSS.history_heading}>Checkout History</h2>
                 <table>
                     <thead>
                         <tr>
