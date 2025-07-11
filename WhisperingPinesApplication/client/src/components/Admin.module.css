@@ -1,0 +1,13 @@
+.admin_page {
+    background-color: lightgray;
+}
+
+.title {
+    text-align: center;
+}
+
+.admin_nav_bar {
+    height: 3rem;
+    width: 100%;
+    border: solid;
+}

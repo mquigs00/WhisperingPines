@@ -1,3 +1,14 @@
+/*
+The Account page is a grid as such:
+
+------------------------------------|
+|  Hello {Name}    |                |
+|                  |   Checkout     |
+|    Recommended   |   History      |
+|     Carousel     |                |
+|-----------------------------------
+*/
+
 .account_grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -5,14 +16,50 @@
 }
 
 .welcome {
-    padding-left: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     box-sizing: border-box;
 }
 
-.checkout_history {
-    grid-row: 1 / span 2;
+.greeting {
+    margin-bottom: 1rem;
 }
 
-.table_cell {
+.details_box {
+    display: flex;
+    flex-direction: column;
+}
+
+.account_detail {
+    margin-bottom: 1;
+    margin-top: 0;
+}
+
+.edit_account_btn {
+    margin: auto;
+}
+
+/*
+    Checkout history table should span both rows on the right side of the main grid
+*/
+.checkout_history {
+    grid-row-end: span 2;
+}
+
+.history_cell {
     height: 1.5rem;
+}
+
+.history_small {
+    width: 5rem;
+}
+
+.history_title {
+    width: 20rem;
+}
+
+
+.recommended {
+    margin-left: 14rem;
 }
