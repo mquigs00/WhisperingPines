@@ -1,18 +1,18 @@
+import { Outlet } from 'react-router-dom';
 import AdminCSS from './Admin.module.css';
+import NavigationBar from './NavigationBar';
 
 const Admin = () => {
+    const navItems = {
+        "Reports": "/admin/reports",
+        "Data": "/admin/database",
+        "Search Users": "/admin/search-users"
+    }
     return (
         <div className={AdminCSS.admin_page}>
             <h1 className={AdminCSS.title}>Admin Settings</h1>
-            <div className={AdminCSS.admin_nav_bar}>
-                {/*
-                    Navigation bar that lets admin
-                    1. Generate reports (overdue books, view all users, view catalog),
-                    2. Load more books into the database
-                    3. Search and manage users (delete users)
-                
-                */}
-            </div>
+            <NavigationBar navItems={navItems} />
+            <Outlet />
         </div>
     )
 }

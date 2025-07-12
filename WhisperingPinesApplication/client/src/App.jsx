@@ -8,6 +8,10 @@ import BookPage from './components/BookPage.jsx';
 import Admin from './components/Admin.jsx';
 import Register from './components/Register.jsx';
 import ContactUs from './components/ContactUs.jsx';
+import Reports from './components/Reports.jsx';
+import SearchUsers from './components/SearchUsers.jsx';
+import Database from './components/Database.jsx';
+import AdminHome from './components/AdminHome.jsx';
 
 function App() {
   return (
@@ -21,6 +25,12 @@ function App() {
           <Route path="/catalog" element={<Catalog />}></Route>
           <Route path="/book-page" element={<BookPage />}></Route>
           <Route path="/contact-us" element={<ContactUs />}></Route>
+          <Route path="/admin/*" element={<Admin />}>
+            <Route index element={<AdminHome />}></Route>
+            <Route path="reports" element={<Reports />}></Route>
+            <Route path="database" element={<Database />}></Route>
+            <Route path="search-users" element={<SearchUsers />}></Route>
+          </Route>
         </Routes>
       </main>
       <Footer></Footer>

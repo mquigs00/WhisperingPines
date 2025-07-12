@@ -1,20 +1,20 @@
 import {useNavigate} from 'react-router-dom';
 import NavigationBarCSS from './NavigationBar.module.css';
 
-const NavigationBar = () => {
+const NavigationBar = ({navItems}) => {
     const navigate = useNavigate();
 
     return (
         <ul className={NavigationBarCSS.flex_container}>
-            <li className={NavigationBarCSS.nav_title} onClick = {() => navigate('/account')}>
-                Account
-            </li>
-            <li className={NavigationBarCSS.nav_title} onClick = {() => navigate('/catalog')}>
-                Search the Catalog
-            </li>
-            <li className={NavigationBarCSS.nav_title} onClick = {() => navigate('/contact-us')}>
-                Contact
-            </li>
+            {Object.entries(navItems).map(([title, route]) => (
+                <li
+                    key={title}
+                    onClick = {() => navigate(route)}
+                    className = {NavigationBarCSS.navItem}
+                >
+                    {title}
+                </li>
+            ))}
         </ul>
     )
 }

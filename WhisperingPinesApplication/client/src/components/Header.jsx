@@ -4,6 +4,12 @@ import NavigationBar from './NavigationBar';
 
 const Header = () => {
     const navigate = useNavigate();
+    const navItems = {
+        "Account": "/account",
+        "Search Catalog": "/catalog",
+        "Contact": "/contact-us",
+        "Admin": "/admin"
+    }
 
     return (
         <header>
@@ -32,7 +38,7 @@ const Header = () => {
                 </div>
             </section>
             <section>
-                <NavigationBar></NavigationBar>
+                <NavigationBar navItems={navItems} />
             </section>
         </header>
     )
