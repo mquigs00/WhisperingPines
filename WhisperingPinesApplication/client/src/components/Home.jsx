@@ -1,7 +1,10 @@
+import {useNavigate} from 'react-router-dom';
 import HomeCSS from './Home.module.css';
 import Carousel from './Carousel.jsx';
 
 const Home = () => {
+    const navigate = useNavigate();
+    
     return (
         <div className={HomeCSS.home}>
             <section className={HomeCSS.library_intro_text}>
@@ -37,7 +40,9 @@ const Home = () => {
                             <input className={HomeCSS.search_input} type="text" id="author"/>
                         </div>
 
-                        <button type="submit">Search</button>
+                        <button type="submit" onClick={() => navigate('/catalog')}>
+                            Search
+                        </button>
                         <button type="reset">Clear</button>
                     </form>
                 </div>

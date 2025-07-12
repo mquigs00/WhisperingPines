@@ -1,6 +1,8 @@
+import {useNavigate} from 'react-router-dom';
 import CatalogCSS from './Catalog.module.css';
 
 const Catalog = () => {
+    const navigate = useNavigate();
     return (
         <>
             <h1 className={CatalogCSS.title}>Search Our Catalog</h1>
@@ -32,7 +34,7 @@ const Catalog = () => {
                     <tbody>
                         <tr>
                             <td>9780060534295</td>
-                            <td>Couldn't Keep It to Myself: Testimonies from Our Imprisoned Sisters</td>
+                            <td onClick = {() => navigate('/book-page')}>Couldn't Keep It to Myself: Testimonies from Our Imprisoned Sisters</td>
                             <td>Wally Lamb</td>
                             <td>HarperCollins Publishers</td>
                             <td>In</td>

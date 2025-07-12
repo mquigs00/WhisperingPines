@@ -1,7 +1,10 @@
+import {useNavigate} from 'react-router-dom';
 import HeaderCSS from './Header.module.css';
 import NavigationBar from './NavigationBar';
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
         <header>
             <section className ={HeaderCSS.top_contact_bar}>
@@ -19,8 +22,12 @@ const Header = () => {
                         <label className={HeaderCSS.header_login_label} htmlFor="password">Password:</label>
                         <input id="password" type="text" required maxLength="15"/>
 
-                        <button type="submit">Log In</button>
-                        <button>Register</button>
+                        <button type="submit" onClick = {() => navigate('/account')}>
+                            Log In
+                        </button>
+                        <button onClick={() => navigate('/register')}>
+                            Register
+                        </button>
                     </form>
                 </div>
             </section>
