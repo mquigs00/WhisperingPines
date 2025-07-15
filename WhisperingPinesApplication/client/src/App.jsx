@@ -20,8 +20,8 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/account" element={<Account />}></Route>
+          <Route path="/account/register" element={<Register />}></Route>
+          <Route path="/account/my-account" element={<Account />}></Route>
           <Route path="/catalog" element={<Catalog />}></Route>
           <Route path="/book-page" element={<BookPage />}></Route>
           <Route path="/contact-us" element={<ContactUs />}></Route>

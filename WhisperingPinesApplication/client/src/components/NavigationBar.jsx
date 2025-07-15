@@ -10,7 +10,7 @@ const NavigationBar = ({navItems}) => {
                 <li
                     key={title}
                     onClick = {() => navigate(route)}
-                    className = {NavigationBarCSS.navItem}
+                    className = {NavigationBarCSS.nav_title}
                 >
                     {title}
                 </li>
