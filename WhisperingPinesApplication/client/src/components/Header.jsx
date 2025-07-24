@@ -22,8 +22,8 @@ const Header = () => {
                 </a>
                 <div className={HeaderCSS.header_login_bars}>
                     <form action="/login" method="POST">
-                        <label className={HeaderCSS.header_login_label} htmlFor="email_address">Email Address:</label>
-                        <input id="email_address" type="text" name="email_address" required maxLength="15"/>
+                        <label className={HeaderCSS.header_login_label} htmlFor="emailAddress">Email Address:</label>
+                        <input id="emailAddress" type="text" name="emailAddress" required maxLength="15"/>
 
                         <label className={HeaderCSS.header_login_label} htmlFor="password">Password:</label>
                         <input id="password" type="text" name="password" required maxLength="15"/>

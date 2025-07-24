@@ -1,27 +1,20 @@
 import AccountCSS from "./Account.module.css";
+import useUserStore from "../stores/useUserStore";
 
 const Account = () => {
-    const user = {
-        id: 1,
-        first_name: "John",
-        last_name: "Doe",
-        account_number: "1234-5678-9102",
-        phone_number: "123-456-7890",
-        email: "myemail@email.com",
-        balance_due: 30.25,
-        language: "English"
-    }
+    const user = useUserStore((state) => state.user);
+
+    if (!user) return <p>Loading user</p>
 
     return (
         <div className={AccountCSS.account_grid}>
             <section className={AccountCSS.welcome}>
-                <h1 className={AccountCSS.greeting}>Hello, {user.first_name}</h1>
+                <h1 className={AccountCSS.greeting}>Hello, {user.firstName}</h1>
                 <div className={AccountCSS.details_box}>
-                    <p className={AccountCSS.account_detail}>Account Number: {user.account_number}</p>
-                    <p className={AccountCSS.account_detail}>Phone Number: {user.phone_number}</p>
-                    <p className={AccountCSS.account_detail}>Email Address: {user.email}</p>
-                    <p className={AccountCSS.account_detail}>Balance Due: {user.balance_due}</p>
-                    <p className={AccountCSS.account_detail}>Preferred Language: {user.language}</p>
+                    <p className={AccountCSS.account_detail}>Account Number: {user.userId.toString().padStart(10, '0')}</p>
+                    <p className={AccountCSS.account_detail}>Phone Number: {user.phoneNumber}</p>
+                    <p className={AccountCSS.account_detail}>Email Address: {user.emailAddress}</p>
+                    <p className={AccountCSS.account_detail}>Balance Due: {user.balanceDue}</p>
                     <button className={AccountCSS.edit_account_btn}>Edit</button>
                 </div>
             </section>

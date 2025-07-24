@@ -1,9 +1,12 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import RegisterCSS from './Register.module.css';
+import useUserStore from '../stores/useUserStore';
+
+
 
 const Register = () => {
-    const [form, setForm] = useState({
+    const [registerForm, setRegisterForm] = useState({
         firstName: '',
         middleName: '',
         lastName: '',
@@ -17,48 +20,90 @@ const Register = () => {
         password: ''
     });
 
+    const [loginForm, setLoginForm] = useState({
+        emailAddress: '',
+        password: '',
+    });
+
+    const {setUser} = useUserStore();
+
     const [error, setError] = useState('');
     
     const navigate = useNavigate();
 
     // every time a character is typed into a field, handleChange is called to update that field
-    const handleChange = async(e) =>
-        setForm({
-            ...form,                                                                                // copy current form values
+    const handleRegisterChange = async(e) => {
+        setRegisterForm({
+            ...registerForm,                                                                                // copy current form values
             [e.target.name]: e.target.value                                                    // update next field
         });
+    };
     
-    const handleSubmit = async(e) => {
-        e.preventDefault();                                                                         // prevent page reload
+    const handleLoginChange = async(e) => {
+        setLoginForm({
+            ...loginForm, [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmitLogin = async(e) => {
+        e.preventDefault();
         setError('');
 
         try {
-            const res = await fetch('/api/register', {
+            const res = await fetch('/api/login', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json',},
-                body: JSON.stringify(form),
+                headers: {'Content-Type': 'application/json',},
+                body: JSON.stringify(loginForm),
             });
 
             if (res.ok) {
+                console.log('Login Success');
+                navigate('/account/my-account');
+            }
+        } catch(error) {
+            setError(error.message);
+        }
+    }
+    
+    const handleSubmitRegister = async(e) => {
+        e.preventDefault();                                                                         // prevent page reload
+        console.log('handleSubmit triggered');
+        setError('');
+
+        try {
+            console.log('calling register api');
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json',},
+                body: JSON.stringify(registerForm),
+            });
+
+            console.log('Called register api');
+
+            if (res.ok) {
                 console.log('Registration success');
+                const data = await res.json();
+                useUserStore.getState().setUser(data.user);
                 navigate('/account/my-account');
             }
         } catch(err) {
             setError(err.message);
         }
-    }
+    };
 
     return (
         <div>
             <h1>Register for an Account</h1>
             <h2>Already a member?</h2>
-            <form className={RegisterCSS.formcontainer} action="/login" method="POST">
+            <form className={RegisterCSS.formcontainer} onSubmit={handleSubmitLogin}>
                 <div>
-                    <label htmlFor="email_address">Email Address:</label>
+                    <label htmlFor="emailAddress">Email Address:</label>
                     <input
                         className={RegisterCSS.account_input}
-                        id="email_address"
-                        name="email_address"
+                        id="emailAddress"
+                        name="emailAddress"
+                        value={loginForm.emailAddress}
+                        onChange={handleLoginChange}
                         type="text"
                         required
                     />
@@ -69,6 +114,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="password"
                         name="password"
+                        value={loginForm.password}
+                        onChange={handleLoginChange}
                         type="text"
                         required
                     />
@@ -77,15 +124,15 @@ const Register = () => {
                 <button type='reset'>Clear</button>
             </form>
             <h2>Register</h2>
-            <form className={RegisterCSS.formcontainer} onSubmit={handleSubmit}>
+            <form className={RegisterCSS.formcontainer} onSubmit={handleSubmitRegister}>
                 <div>
                     <label htmlFor="firstName">First Name:</label>
                     <input
                         className={RegisterCSS.account_input}
                         id="firstName"
                         name="firstName"
-                        value={form.firstName}
-                        onChange={handleChange}
+                        value={registerForm.firstName}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />
@@ -96,8 +143,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="middleName"
                         name="middleName"
-                        value={form.middleName}
-                        onChange={handleChange}
+                        value={registerForm.middleName}
+                        onChange={handleRegisterChange}
                         type="text"
                     />
                 </div>
@@ -107,8 +154,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="lastName"
                         name="lastName"
-                        value={form.lastName}
-                        onChange={handleChange}
+                        value={registerForm.lastName}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />
@@ -119,8 +166,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="dateOfBirth"
                         name="dateOfBirth"
-                        value={form.dateOfBirth}
-                        onChange={handleChange}
+                        value={registerForm.dateOfBirth}
+                        onChange={handleRegisterChange}
                         type="date"
                         required
                     />
@@ -131,9 +178,9 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="phoneNumber"
                         name="phoneNumber"
-                        value={form.phoneNumber}
-                        onChange={handleChange}
-                        type="text"
+                        value={registerForm.phoneNumber}
+                        onChange={handleRegisterChange}
+                        type="tel"
                         required
                     />
                 </div>
@@ -143,9 +190,9 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="emailAddress"
                         name="emailAddress"
-                        value={form.emailAddress}
-                        onChange={handleChange}
-                        type="text"
+                        value={registerForm.emailAddress}
+                        onChange={handleRegisterChange}
+                        type="email"
                         required
                     />
                 </div>
@@ -155,8 +202,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="streetAddress"
                         name="streetAddress"
-                        value={form.streetAddress}
-                        onChange={handleChange}
+                        value={registerForm.streetAddress}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />
@@ -167,15 +214,15 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="city"
                         name="city"
-                        value={form.city}
-                        onChange={handleChange}
+                        value={registerForm.city}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />
                 </div>
                 <div>
                     <label htmlFor="state">State:</label>
-                    <select className={RegisterCSS.account_input} id="state" name="state" type="text" value={form.state} onChange={handleChange} required>
+                    <select className={RegisterCSS.account_input} id="state" name="state" type="text" value={registerForm.state} onChange={handleRegisterChange} required>
                         <option disabled value="DEFAULT">Select</option>
                         <option value="alabama">AL</option>
                         <option value="alaska">AK</option>
@@ -234,8 +281,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="zipcode"
                         name="zipcode"
-                        value={form.zipcode}
-                        onChange={handleChange}
+                        value={registerForm.zipcode}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />
@@ -246,8 +293,8 @@ const Register = () => {
                         className={RegisterCSS.account_input}
                         id="password"
                         name="password"
-                        value={form.password}
-                        onChange={handleChange}
+                        value={registerForm.password}
+                        onChange={handleRegisterChange}
                         type="text"
                         required
                     />

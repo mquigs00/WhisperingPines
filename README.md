@@ -5,4 +5,8 @@ I've created and loaded my Books, BookEditions, BookCopies, Publisher, Authors, 
 I've gone back to an RDS MySQL database instead of SQL Server just because the licensing costs are not worth it for a self-funded practice project.
 I've got my basic front end setup and am starting to combine my Express backend for routing.
 
+Update: 7.15.25:
+Register form now actually inserts new user to database. Still need to work out inserting the address pieces into each of their respective table and linking the userId, premise,
+streetId, and zipcodeId in User_to_Address table.
+
 You can view my inital repo here: https://github.com/mquigs00/LibrarySim
