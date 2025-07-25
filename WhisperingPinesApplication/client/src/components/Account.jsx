@@ -1,20 +1,63 @@
 import AccountCSS from "./Account.module.css";
-import useUserStore from "../stores/useUserStore";
+import {useState, useEffect} from 'react';
+
 
 const Account = () => {
-    const user = useUserStore((state) => state.user);
+    const [userData, setUserData] = useState({
+        userID: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        emailAddress: '',
+        phoneNumber: '',
+        dateOfBirth: '',
+        balanceDue: ''
+    })
 
-    if (!user) return <p>Loading user</p>
+    useEffect(() => {
+        const getUserData = async() => {
+            console.log("Running getUserData()");
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.log("Did not find token in local storage");
+                return
+            }
+
+            try {
+                const res = await fetch('/api/account/my-account', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log(data);
+                    setUserData(data);
+                } else {
+                    console.error("Was unable to retrieve user data");
+                }
+                
+            } catch (error) {
+                console.error("Error retrieving account info: ", error);
+            }
+        }
+
+        getUserData();
+    }, []);
+
+    
 
     return (
         <div className={AccountCSS.account_grid}>
             <section className={AccountCSS.welcome}>
-                <h1 className={AccountCSS.greeting}>Hello, {user.firstName}</h1>
+                {console.log(userData)}
+                <h1 className={AccountCSS.greeting}>Hello, {userData.firstName}</h1>
                 <div className={AccountCSS.details_box}>
-                    <p className={AccountCSS.account_detail}>Account Number: {user.userId.toString().padStart(10, '0')}</p>
-                    <p className={AccountCSS.account_detail}>Phone Number: {user.phoneNumber}</p>
-                    <p className={AccountCSS.account_detail}>Email Address: {user.emailAddress}</p>
-                    <p className={AccountCSS.account_detail}>Balance Due: {user.balanceDue}</p>
+                    <p className={AccountCSS.account_detail}>Account Number: {userData.userID.toString().padStart(9, '0')}</p>
+                    <p className={AccountCSS.account_detail}>Phone Number: {userData.phoneNumber}</p>
+                    <p className={AccountCSS.account_detail}>Email Address: {userData.emailAddress}</p>
+                    <p className={AccountCSS.account_detail}>Balance Due: {userData.balanceDue}</p>
                     <button className={AccountCSS.edit_account_btn}>Edit</button>
                 </div>
             </section>

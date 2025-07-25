@@ -58,6 +58,10 @@ const Register = () => {
 
             if (res.ok) {
                 console.log('Login Success');
+                const data = await res.json();
+                const token = data.accessToken;
+                console.log("Setting token");
+                localStorage.setItem('token', token); // store the access token in local storage for dev. Update to HttpOnly cookie
                 navigate('/account/my-account');
             }
         } catch(error) {
@@ -83,7 +87,7 @@ const Register = () => {
             if (res.ok) {
                 console.log('Registration success');
                 const data = await res.json();
-                useUserStore.getState().setUser(data.user);
+                localStorage.setItem('token', data.accessToken);
                 navigate('/account/my-account');
             }
         } catch(err) {

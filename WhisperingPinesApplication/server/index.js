@@ -16,8 +16,12 @@ app.post('/api/register', async(req, res) => {
         const insertComm = "INSERT INTO Users (firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
         const [result] = await pool.query(insertComm, [firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, hashedPassword]);
         console.log("Inserting user");
+        const user = {email: emailAddress};
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        
         res.status(201).json({
             success: true,
+            accessToken: accessToken,
             user: {
                 userId: result.insertId,
                 firstName,
@@ -70,6 +74,27 @@ app.post('/api/login', async(req, res) => {
         }
     } catch(error) {
         console.error("Error logging in: " + error);
+    }
+});
+
+app.get('/api/account/my-account', async(req, res) => {
+    try {
+        const authorization = req.headers.authorization;
+        const token = authorization.substring(7);
+        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        const emailAddress = payload.email;
+        const selectComm = "SELECT userID, firstName, middleName, lastName, emailAddress, phoneNumber, dateOfBirth, balanceDue FROM Users WHERE emailAddress = ?";
+        const [result] = await pool.query(selectComm, [emailAddress]);
+
+        // if a row was found in the Users table for the given email address
+        if (result.length > 0) {
+            res.json(result[0]);                           // send the user data back to the client
+        } else {
+            console.log("Did not find a user with that email address!");
+        }
+
+    } catch (error) {
+        console.error('Error loading account page: ', error);
     }
 });
 
