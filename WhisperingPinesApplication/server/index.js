@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
-const bcrypt = require('bcrypt');
+
+
+const accountRoutes = require('./routes/account');
 
 const app = express();
-const jwt = require('jsonwebtoken');
+
 app.use(cors())
 app.use(express.json())
+
+console.log("Calling /api/account");
+app.use('/api/account', accountRoutes);
 
 app.listen(3001, () => console.log('Server running on port 3001'));

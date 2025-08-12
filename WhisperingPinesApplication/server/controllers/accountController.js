@@ -1,16 +1,18 @@
-const pool = require('./db');
+const pool = require('../db');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const conn = pool.getConnection();
-
-const accountService = require('../services/userService');
+const accountService = require('../services/accountService');
 const addressService = require('../services/addressService')
 
 async function registerUser(req, res) {
+    console.log('Beginning registerUser')
+    const conn = await pool.getConnection();
     try {
         console.log('Incoming data:', req.body);
-        const {firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, streetAddress, apartmentNumber, city, state, zipcode, password} = req.body;   // extract all form values
+        const {firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, streetAddress, apartmentNumber, locality, state, zipcode, password} = req.body;   // extract all form values
 
-        userExists = accountService.userExists(emailAddress);         // check that a user with the given email does not already exist
+        let userExists = await accountService.userExists(emailAddress, conn);         // check that a user with the given email does not already exist
 
         if (userExists) {
             console.log("A user with that email already exists")
@@ -21,29 +23,33 @@ async function registerUser(req, res) {
         }
 
         console.log("Email address is not in use, beginning register transaction")
-        await conn.beginTransaction;
+        await conn.beginTransaction();
 
-        // split the street address into the premise and the street name
-        // ex. 123 Park Way = ["123", "Park Way"]
-        const streetAddressSplit = streetAddress.split(" ", 2);
-        const premise = streetAddressSplit[0];
-        const street = streetAddressSplit[1];
+        const firstSpace = streetAddress.indexOf(" ");                              // get the index of the first space
+        const premise = streetAddress.slice(0, firstSpace);                         // extract everything up to the first space as the premise ("123")
+        const street = streetAddress.slice(firstSpace+1);                           // extract everything after the space as the street ("Penny Lane")
 
         const stateId = await addressService.getStateId(conn, state);               // get the database id for the given state
         console.log("State ID = " + stateId);
 
-        const {localityId, wasInserted} = addressService.getOrInsertLocality(conn, city, stateId);  // get or insert the locality
+        const {localityId, localityWasInserted} = await addressService.getOrInsertLocality(conn, locality, stateId);  // get or insert the locality
+        console.log("locality id", localityId);
 
         let streetId;
         
         // if the locality had to be inserted, then the street also couldn't have existed in the database yet
-        if (wasInserted) {
-            const streetId = await addressService.insertStreet(conn, street, localityId);     // insert street and get id
+        if (localityWasInserted) {
+            console.log("Inserted new locality, inserting new street now. Locality id = ", localityId);
+            ({streetId} = await addressService.insertStreet(conn, street, localityId));     // insert street and get id
         } else {
-            const streetId = await addressService.getOrInsertStreet(conn ,street, localityId);    // get the existing street id
+            console.log("Locality already existed, calling getOrInsertStreet. Locality id = ", localityId);
+            ({streetId} = await addressService.getOrInsertStreet(conn ,street, localityId));    // get the existing street id
         }
 
-        const zipcodeId = addressService.getOrInsert(conn, zipcode)                           // get or insert the zipcode id
+        console.log('Street Id in accountController: ', streetId);
+
+        const {zipcodeId, zipcodeWasInserted} = await addressService.getOrInsertZipcode(conn, zipcode)                           // get or insert the zipcode id
+        console.log("accountController zipcodeId = ", zipcodeId);
 
         const hashedPassword = await bcrypt.hash(password, 10);                                  // hash password
         //const insertComm = "INSERT INTO Users (firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -58,7 +64,7 @@ async function registerUser(req, res) {
             password: hashedPassword
         }
 
-        const userId = await accountService.insertUser(userData);
+        const userId = await accountService.insertUser(userData, conn);
 
         const addressData = {
             premise,
@@ -67,8 +73,9 @@ async function registerUser(req, res) {
             zipcodeId
         }
         
-        await accountService.linkUserToAddress(userId, addressData);
-        console.log("Inserting user");
+        await accountService.linkUserToAddress(userId, addressData, conn);
+        await conn.commit();
+        
         const user = {email: emailAddress};
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
         
@@ -128,7 +135,7 @@ async function loginUser(req, res) {
     } catch(error) {
         console.error("Error logging in: " + error);
     }
-}
+};
 
 async function displayAccount(req, res) {
     try {
@@ -149,7 +156,7 @@ async function displayAccount(req, res) {
     } catch (error) {
         console.error('Error loading account page: ', error);
     }
-}
+};
 
 async function logoutUser(req, res) {
     try {
@@ -157,10 +164,10 @@ async function logoutUser(req, res) {
     } catch (error) {
         console.error("Error logging out user: ", error);
     }
-}
+};
 
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    displayAccount
 };

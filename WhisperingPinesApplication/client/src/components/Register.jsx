@@ -77,7 +77,7 @@ const Register = () => {
 
         try {
             console.log('calling register api');
-            const res = await fetch('/api/register', {
+            const res = await fetch('/api/account/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json',},
                 body: JSON.stringify(registerForm),
