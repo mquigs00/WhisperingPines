@@ -33,8 +33,26 @@ async function linkUserToAddress(userId, addressData, conn) {
     }
 };
 
+async function getPassword(emailAddress, conn) {
+    try {
+        const selectComm = "SELECT password FROM Users WHERE emailAddress = ?";
+        const [passwordsResult] = await conn.query(selectComm, [emailAddress]);
+
+        if (passwordsResult.length === 1) {
+            return passwordsResult[0].password;
+        } else if (passwordsResult.length > 1) {
+            throw new Error("Multiple passwords exist for email address " + emailAddress);
+        }
+
+    } catch (error) {
+        console.error("Error getting password", error);
+    }
+
+}
+
 module.exports = {
     insertUser,
     userExists,
-    linkUserToAddress
+    linkUserToAddress,
+    getPassword
 }

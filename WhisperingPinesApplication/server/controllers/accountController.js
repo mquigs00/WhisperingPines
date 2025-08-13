@@ -52,8 +52,7 @@ async function registerUser(req, res) {
         console.log("accountController zipcodeId = ", zipcodeId);
 
         const hashedPassword = await bcrypt.hash(password, 10);                                  // hash password
-        //const insertComm = "INSERT INTO Users (firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        //[insertUserResults] = await pool.query(insertComm, [firstName, middleName, lastName, dateOfBirth, phoneNumber, emailAddress, hashedPassword]);
+        
         const userData = {
             firstName,
             middleName,
@@ -103,17 +102,19 @@ async function registerUser(req, res) {
 };
 
 async function loginUser(req, res) {
+    const conn = await pool.getConnection();
     try {
         console.log('Incoming data:', req.body);
         const {emailAddress, password} = req.body;
-        const selectComm = "SELECT password FROM Users WHERE emailAddress = ?";
-        const [passwordsResult] = await pool.query(selectComm, [emailAddress]);
-        console.log(result);
+
+        const userExists = await accountService.userExists(emailAddress, conn);
         
         // if any results came back for the given email address
-        if (passwordsResult.length > 0) {
+        if (userExists) {
+            const dbPassword = await accountService.getPassword(emailAddress, conn);
+
             // if the given password matches the correct password
-            if (await bcrypt.compare(password, passwordsResult[0].password)) {
+            if (await bcrypt.compare(password, dbPassword)) {
                 console.log("Bcrypt.compare returned true, giving access token");
                 const user = {email: emailAddress};
                 const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);

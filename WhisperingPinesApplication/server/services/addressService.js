@@ -28,6 +28,7 @@ async function getOrInsertLocality(conn, localityName, stateId) {
     try {
         localityExistsQuery = "SELECT localityId FROM Localities WHERE name = ? AND stateId = ?";
         const [matchingLocalities] = await conn.query(localityExistsQuery, [localityName, stateId]);
+        console.log(matchingLocalities);
 
         // if the locality did not already exist
         if (matchingLocalities.length === 0) {
@@ -38,6 +39,7 @@ async function getOrInsertLocality(conn, localityName, stateId) {
 
             return {localityId: newLocalityId, localityWasInserted: true};
         } else {
+            console.log("Locality already existed, returning existing locality id")
             return {localityId: matchingLocalities[0].localityId, localityWasInserted: false};
         }
     } catch (error) {
