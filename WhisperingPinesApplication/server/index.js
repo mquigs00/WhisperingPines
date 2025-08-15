@@ -3,6 +3,7 @@ const cors = require('cors');
 const pool = require('./db');
 
 const accountRoutes = require('./routes/accountRoutes');
+const catalogRoutes = require('./routes/catalogRoutes');
 
 const app = express();
 
@@ -11,5 +12,6 @@ app.use(express.json())
 
 console.log("Calling /api/account");
 app.use('/api/account', accountRoutes);
+app.use('/api/catalog', catalogRoutes);
 
 app.listen(3001, () => console.log('Server running on port 3001'));

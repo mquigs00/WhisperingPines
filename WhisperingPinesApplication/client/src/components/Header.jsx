@@ -6,7 +6,7 @@ const Header = () => {
     const navigate = useNavigate();
     const navItems = {
         "Account": "/account/my-account",
-        "Search Catalog": "/catalog",
+        "Catalog": "/catalog",
         "Contact": "/contact-us",
         "Admin": "/admin"
     }

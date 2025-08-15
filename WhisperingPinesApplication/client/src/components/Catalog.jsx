@@ -1,23 +1,96 @@
-import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 import CatalogCSS from './Catalog.module.css';
 
 const Catalog = () => {
-    const navigate = useNavigate();
+    const [searchForm, setSearchForm] = useState({
+        title: '',
+        author: '',
+        isbn13: ''
+    });
+
+    const [matchingBooks, setMatchingBooks] = useState([]);
+
+    const [error, setError] = useState('');
+
+    const handleSearchChange = async(e) => {
+        setSearchForm({
+            ...searchForm, [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmitSearch = async(e) => {
+        console.log("calling handleSubmitSearch");
+        e.preventDefault(); // still need?
+        setError('');
+
+        try {
+            const params = new URLSearchParams(searchForm).toString();
+            const res = await fetch(`/api/catalog?${params}`, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+            });
+            
+            if (res.ok) {
+                const data = await res.json();
+                setMatchingBooks(data.books);
+            }
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    const emptyBook = {
+        isbn13: '-',
+        title: '-',
+        firstName: '-',
+        lastName: '',
+        name: '-',
+        availability: '-'
+    };
+
+    const totalRows = 12;
+
+    console.log("Matching books");
+    console.log(matchingBooks);
+
+    const paddedBooks = [
+        ...matchingBooks,
+        ...Array(Math.max(totalRows - matchingBooks.length, 0)).fill(emptyBook)
+    ];
+
     return (
         <>
             <h1 className={CatalogCSS.title}>Search Our Catalog</h1>
             <div className={CatalogCSS.search_criteria}>
-                <form action="">
+                <form onSubmit={handleSubmitSearch}>
                     <label htmlFor="title">Title:</label>
-                    <input type="text" id="title"/>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={searchForm.title}
+                        onChange={handleSearchChange}
+                    />
 
                     <label htmlFor="author">Author:</label>
-                    <input type="text" id="author"/>
+                    <input
+                        type="text"
+                        id="author"
+                        name="author"
+                        value={searchForm.author}
+                        onChange={handleSearchChange}
+                    />
 
                     <label htmlFor="isbn13">ISBN13:</label>
-                    <input type="text" id="isbn13"/>
+                    <input
+                        type="text"
+                        id="isbn13"
+                        name="isbn13"
+                        value={searchForm.isbn13}
+                        onChange={handleSearchChange}
+                    />
 
-                    <button>Search</button>
+                    <button type='submit'>Search</button>
                 </form>
             </div>
             <div className={CatalogCSS.catalog_table}>
@@ -32,90 +105,15 @@ const Catalog = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>9780060534295</td>
-                            <td onClick = {() => navigate('/book-page')}>Couldn't Keep It to Myself: Testimonies from Our Imprisoned Sisters</td>
-                            <td>Wally Lamb</td>
-                            <td>HarperCollins Publishers</td>
-                            <td>In</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
+                        {paddedBooks.map((book, idx) => (
+                            <tr key={idx}>
+                                <td>{book.isbn13}</td>
+                                <td>{book.title}</td>
+                                <td>{book.firstName + " " + book.lastName}</td>
+                                <td>{book.name}</td>
+                                <td>{book.availability}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
