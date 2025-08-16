@@ -42,8 +42,7 @@ const Catalog = () => {
     const emptyBook = {
         isbn13: '-',
         title: '-',
-        firstName: '-',
-        lastName: '',
+        fullName: '-',
         name: '-',
         availability: '-'
     };
@@ -109,7 +108,7 @@ const Catalog = () => {
                             <tr key={idx}>
                                 <td>{book.isbn13}</td>
                                 <td>{book.title}</td>
-                                <td>{book.firstName + " " + book.lastName}</td>
+                                <td>{book.fullName}</td>
                                 <td>{book.name}</td>
                                 <td>{book.availability}</td>
                             </tr>

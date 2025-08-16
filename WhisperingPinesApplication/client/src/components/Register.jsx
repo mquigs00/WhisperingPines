@@ -3,8 +3,6 @@ import {useNavigate} from 'react-router-dom';
 import RegisterCSS from './Register.module.css';
 import useUserStore from '../stores/useUserStore';
 
-
-
 const Register = () => {
     const [registerForm, setRegisterForm] = useState({
         firstName: '',

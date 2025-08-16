@@ -6,22 +6,44 @@
  * @param {} conn 
  */
 async function getSearchResults(bookData, conn) {
-    let authorId;
+    const {title, author, isbn13} = bookData;
 
     // find the book edition row with the same isbn13 and then join on the Books table to get the bookId
-    const bookQuery = `
+    let bookQuery = `
     SELECT
-        BookEditions.isbn13, Books.title, Authors.firstName, Authors.lastName, Publishers.name, BookCopies.availability
+        BookEditions.isbn13, Books.title, Authors.fullName, Publishers.name, BookCopies.availability
     FROM
         BookEditions
     INNER JOIN Books ON BookEditions.bookId=Books.bookId
     INNER JOIN Authors ON Books.authorId=Authors.authorId
     INNER JOIN Publishers ON BookEditions.publisherId=Publishers.publisherId
     INNER JOIN BookCopies ON BookEditions.editionId=BookCopies.editionId
-    WHERE isbn13 = ?
-    `
+    WHERE 1=1
+    `;
+
+    const choices = []
+
+    if (isbn13) {
+        bookQuery += " AND BookEditions.isbn13 = ?";
+        choices.push(isbn13);
+    }
+
+    if (title) {
+        console.log("Adding title");
+        bookQuery += " AND Books.title LIKE ?";
+        choices.push(`%${title}`);
+    }
+
     
-    const [matchingBooks] = await conn.query(bookQuery, [bookData.isbn13]);
+    if (author) {
+        bookQuery += " AND Authors.fullName LIKE ?";
+        choices.push(`%${author}`)
+    }
+
+    console.log(bookQuery);
+    console.log(author);
+
+    const [matchingBooks] = await conn.query(bookQuery, [choices]);
 
     console.log("Searched for matching books in catalog. Found: " + matchingBooks.length);
 

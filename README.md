@@ -20,7 +20,10 @@ After I got my register, login, and my-account api calls working I realized that
 Additionally, my address tables are correctly being loaded now when a user registers. Their street address is split into premise and street, and their address is split across the States, Localities, Streets, Zipcodes, and User_to_Address tables, where the User_to_Address stores the userId, premise, apartment number, streetId, and the zipcodeId
 
 Update 8.12.15:
-Yesterday I noticed an error while testing the register API and I replicated it this morning. When I created my address tables, I put a unique constraint on the "name" columns in Localities and Streets. While I was working out the registerUser function in accountController, I realized that there could be multiple localities names "Montgomery" or multiple streets named "Main Street" across different parts of the country. So when checking if a street or locality already existed, I had to query and select any records that had both the same name and foreign key. This morning I realized when I registered a test user with in locality "Los Angeles" with state set to "California" I got no error. But when I quickly filled out the register form again and tried to submit a user with locality "Los Angeles" and state "Colorado" I got an error for "Duplicate entry 'Los Angeles' for key 'Localities.name'. I realized that in my tables I needed to get rid of the unique constraint on column "name" and make the combination of "name" and "localityId"/"stateId" unique across the table. After reading about composite keys and messing around in MySQL workbench I figured out how to change my indexes to fix this issue
+I just realized I set unique constraints for Locality name and Street name. I added composite unique constraints because it is possible for there to be multiple "Main Street"s in different city and multiple "Montgomery"s in different states.
+
+Update 8.14.15:
+Primitive catalog search is working. Users can search for a book by entering the ISBN13. This is of course the least likely field users would know off the top of their head but is the easiest to build.
 
 
 
