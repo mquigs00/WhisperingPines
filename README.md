@@ -19,12 +19,16 @@ Update 8.11.25:
 After I got my register, login, and my-account api calls working I realized that my server/index.js file was starting to get messy and still had lots more to go. ChatGPT recommended that I a routes folder, services folder, and controllers folder to split up the api's, logic, and database querying. I honestly worried that this was where I would dig a big whole and get stuck. Then last Monday my laptop stopped turning on. I took a few days off and bought a new laptop. I did lots of troubleshooting with ChatGPT but did not have it re-code my project, I've spent weeks reworking everything and now register is once again working. It was a struggle but I am pleased that my next few days a coding should be much smoother now that I've worked out this improved architecture.
 Additionally, my address tables are correctly being loaded now when a user registers. Their street address is split into premise and street, and their address is split across the States, Localities, Streets, Zipcodes, and User_to_Address tables, where the User_to_Address stores the userId, premise, apartment number, streetId, and the zipcodeId
 
-Update 8.12.15:
+Update 8.12.25:
 I just realized I set unique constraints for Locality name and Street name. I added composite unique constraints because it is possible for there to be multiple "Main Street"s in different city and multiple "Montgomery"s in different states.
 
-Update 8.14.15:
+Update 8.14.25:
 Primitive catalog search is working. Users can search for a book by entering the ISBN13. This is of course the least likely field users would know off the top of their head but is the easiest to build.
 
+Update 8.16.25:
+Users can now search the catalog by Author and/or Book Title
 
+Update 8.17.25:
+Users can now click the Books ISBN13 link in the Results table to be routed to that Book's own page to view it's details before checking out.
 
 You can view my inital repo here: https://github.com/mquigs00/LibrarySim

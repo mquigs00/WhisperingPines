@@ -24,28 +24,32 @@ const BookPage = () => {
         fetchBook();
     }, [isbn13]);
 
+    const coverUrl = `https://covers.openlibrary.org/b/isbn/${isbn13}-L.jpg`;
+
     if (!book) return <p>Loading book...</p>
 
     return (
-        <div className={BookPageCSS.book_view}>
-            <div className={BookPageCSS.book_details}>
-                <h1 className={BookPageCSS.title}>{book.title}</h1>
-                <p className={BookPageCSS.book_detail}>Author: {book.fullName}</p>
-                <p className={BookPageCSS.book_detail}>Publisher: {book.name} </p>
-                <p className={BookPageCSS.book_detail}>Published: {book.yearPublished}</p>
-                <p className={BookPageCSS.book_detail}>Pages: {book.numPages}</p>
-                <p className={BookPageCSS.book_detail}>Format: {book.format}</p>
-                <p className={BookPageCSS.book_detail}>ISBN13: {isbn13}</p>
-                <p className={BookPageCSS.book_detail}>ISBN10: {book.ISBN10}</p>
-                <p>Availability: {book.availability}</p>
-                <button className={BookPageCSS.book_button}>Check Out</button>
-                <button className={BookPageCSS.book_button}>Hold</button>
+        <>
+            <h1 className={BookPageCSS.title}>{book.title}</h1>
+            <div className={BookPageCSS.book_view}>
+                <div className={BookPageCSS.book_details}>
+                    <p className={BookPageCSS.book_detail}>Author: {book.fullName}</p>
+                    <p className={BookPageCSS.book_detail}>Publisher: {book.name} </p>
+                    <p className={BookPageCSS.book_detail}>Published: {book.yearPublished}</p>
+                    <p className={BookPageCSS.book_detail}>Pages: {book.numPages}</p>
+                    <p className={BookPageCSS.book_detail}>Format: {book.format}</p>
+                    <p className={BookPageCSS.book_detail}>ISBN13: {isbn13}</p>
+                    <p className={BookPageCSS.book_detail}>ISBN10: {book.ISBN10}</p>
+                    <p>Availability: {book.availability}</p>
+                    <button className={BookPageCSS.book_button}>Check Out</button>
+                    <button className={BookPageCSS.book_button}>Hold</button>
+                </div>
+                
+                <div className={BookPageCSS.book_cover}>
+                    <img src={coverUrl} alt={`${book.title} cover`} />
+                </div>
             </div>
-            
-            <div className={BookPageCSS.book_cover}>
-                <img src={book.cover_url} alt="" />
-            </div>
-        </div>
+        </>
     )
 }
 
