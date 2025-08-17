@@ -33,7 +33,6 @@ async function getSearchResults(bookData, conn) {
         bookQuery += " AND Books.title LIKE ?";
         choices.push(`%${title}`);
     }
-
     
     if (author) {
         bookQuery += " AND Authors.fullName LIKE ?";
@@ -49,6 +48,28 @@ async function getSearchResults(bookData, conn) {
 
     return matchingBooks;
 };
+
+async function getBookByISBN13(isbn13, conn) {
+    console.log("In catalogServices. isbn13 = " + isbn13);
+    const getBookByISBN13Query = `
+    SELECT
+        Books.title, Publishers.name, Authors.fullName, BookEditions.yearPublished, BookEditions.numPages, BookEditions.format,
+        BookEditions.ISBN10, BookCopies.availability
+    FROM
+        BookEditions
+    INNER JOIN Publishers ON BookEditions.publisherId=Publishers.publisherId
+    INNER JOIN Books ON BookEditions.bookId=Books.bookId
+    INNER JOIN Authors ON Books.authorId=Authors.authorId
+    INNER JOIN BookCopies ON BookEditions.editionId=BookCopies.editionId
+    WHERE BookEditions.isbn13=?
+    `;
+
+    const [bookData] = await conn.query(getBookByISBN13Query, [isbn13]);
+
+    console.log(bookData[0]);
+
+    return bookData[0];
+}
 
 // will figure out later
 async function getAuthorId(authorName) {
@@ -76,5 +97,6 @@ module.exports = {
     getAuthorName,
     getPublisherId,
     getPublisherName,
-    getAvailability
+    getAvailability,
+    getBookByISBN13
 }

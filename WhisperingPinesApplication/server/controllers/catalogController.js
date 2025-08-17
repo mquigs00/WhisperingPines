@@ -24,6 +24,27 @@ async function getSearchResults(req, res) {
     }
 }
 
+async function getBook(req, res) {
+    const conn = await pool.getConnection();
+
+    try {
+        const {isbn13} = req.params;
+
+        const bookData = await catalogService.getBookByISBN13(isbn13, conn);
+        console.log("Got book data. Calling res.status.json");
+        conn.release();
+
+        res.status(200).json({
+            success: true,
+            book: bookData,
+        });
+    } catch (error) {
+        console.error("Error getting book: ", error);
+    }
+
+}
+
 module.exports = {
-    getSearchResults
+    getSearchResults,
+    getBook
 };

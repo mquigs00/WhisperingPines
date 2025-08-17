@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {useState} from 'react';
 import CatalogCSS from './Catalog.module.css';
 
@@ -25,7 +26,7 @@ const Catalog = () => {
 
         try {
             const params = new URLSearchParams(searchForm).toString();
-            const res = await fetch(`/api/catalog?${params}`, {
+            const res = await fetch(`/api/catalog/search?${params}`, {
                 method: 'GET',
                 headers: {'Content-Type': 'application/json'},
             });
@@ -106,7 +107,9 @@ const Catalog = () => {
                     <tbody>
                         {paddedBooks.map((book, idx) => (
                             <tr key={idx}>
-                                <td>{book.isbn13}</td>
+                                <td>
+                                    <Link to={`/catalog/${book.isbn13}`}>{book.isbn13}</Link>
+                                </td>
                                 <td>{book.title}</td>
                                 <td>{book.fullName}</td>
                                 <td>{book.name}</td>
