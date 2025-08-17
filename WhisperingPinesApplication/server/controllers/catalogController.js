@@ -1,6 +1,6 @@
 const pool = require('../db');
 
-const catalogService = require('../services/catalogServices');
+const catalogService = require('../services/catalogService');
 
 async function getSearchResults(req, res) {
     const conn = await pool.getConnection();

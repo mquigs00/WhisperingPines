@@ -12,6 +12,7 @@ import Reports from './components/Reports.jsx';
 import SearchUsers from './components/SearchUsers.jsx';
 import Database from './components/Database.jsx';
 import AdminHome from './components/AdminHome.jsx';
+import CheckOut from './components/CheckOut.jsx';
 
 function App() {
   return (

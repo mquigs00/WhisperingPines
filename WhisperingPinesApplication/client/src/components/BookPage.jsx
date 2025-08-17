@@ -1,12 +1,12 @@
 import BookPageCSS from './BookPage.module.css';
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
+import CheckOut from './CheckOut';
 
 const BookPage = () => {
-    console.log("In Book Page!");
     const {isbn13} = useParams();
-    console.log("In BookPage.jsx isbn13 = " + isbn13);
     const [book, setBook] = useState(null);
+    const [showCheckout, setShowCheckout] = useState(false);
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -33,15 +33,20 @@ const BookPage = () => {
             <h1 className={BookPageCSS.title}>{book.title}</h1>
             <div className={BookPageCSS.book_view}>
                 <div className={BookPageCSS.book_details}>
-                    <p className={BookPageCSS.book_detail}>Author: {book.fullName}</p>
-                    <p className={BookPageCSS.book_detail}>Publisher: {book.name} </p>
-                    <p className={BookPageCSS.book_detail}>Published: {book.yearPublished}</p>
-                    <p className={BookPageCSS.book_detail}>Pages: {book.numPages}</p>
-                    <p className={BookPageCSS.book_detail}>Format: {book.format}</p>
-                    <p className={BookPageCSS.book_detail}>ISBN13: {isbn13}</p>
-                    <p className={BookPageCSS.book_detail}>ISBN10: {book.ISBN10}</p>
-                    <p>Availability: {book.availability}</p>
-                    <button className={BookPageCSS.book_button}>Check Out</button>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>Author:</strong> {book.fullName}</p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>Publisher:</strong> {book.name} </p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>Published:</strong> {book.yearPublished}</p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>Pages:</strong> {book.numPages}</p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>Format:</strong> {book.format}</p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>ISBN13:</strong> {isbn13}</p>
+                    <p className={BookPageCSS.book_detail}><strong className={BookPageCSS.label}>ISBN10:</strong> {book.ISBN10}</p>
+                    <p><strong className={BookPageCSS.label}>Availability:</strong> {book.availability}</p>
+                    
+                    <button onClick={() => setShowCheckout(true)} className={BookPageCSS.book_button}>Check Out</button>
+                    {showCheckout && (
+                        <CheckOut book={book} onClose={() => setShowCheckout(false)} />
+                    )}
+
                     <button className={BookPageCSS.book_button}>Hold</button>
                 </div>
                 
