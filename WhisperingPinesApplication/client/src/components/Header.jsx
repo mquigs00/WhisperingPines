@@ -1,4 +1,5 @@
 import {useNavigate} from 'react-router-dom';
+import {useAuth} from '../context/AuthContext';
 import HeaderCSS from './Header.module.css';
 import NavigationBar from './NavigationBar';
 
@@ -11,6 +12,8 @@ const Header = () => {
         "Admin": "/admin"
     }
 
+    const {user, logout} = useAuth();
+
     return (
         <header>
             <section className ={HeaderCSS.top_contact_bar}>
@@ -20,22 +23,32 @@ const Header = () => {
                 <a href="/">
                     <img className={HeaderCSS.logo} src="https://whispering-pines-images.s3.amazonaws.com/WP_Logo.png" alt="Whispering Pines Logo" />
                 </a>
+
                 <div className={HeaderCSS.header_login_bars}>
-                    <form action="/login" method="POST">
-                        <label className={HeaderCSS.header_login_label} htmlFor="emailAddress">Email Address:</label>
-                        <input id="emailAddress" type="text" name="emailAddress" required maxLength="15"/>
+                    {user ? (
+                        <button onClick={logout}>Log Out</button>
+                    ) : (
+                        <>
+                            <form action="/login" method="POST">
+                                <label className={HeaderCSS.header_login_label} htmlFor="emailAddress">Email Address:</label>
+                                <input id="emailAddress" type="text" name="emailAddress" required maxLength="15"/>
 
-                        <label className={HeaderCSS.header_login_label} htmlFor="password">Password:</label>
-                        <input id="password" type="text" name="password" required maxLength="15"/>
-
-                        <button type="submit" onClick = {() => navigate('/account/my-account')}>
-                            Log In
-                        </button>
-                    </form>
-                    <button onClick={() => navigate('/account/register')}>
-                        Register
-                    </button>
+                                <label className={HeaderCSS.header_login_label} htmlFor="password">Password:</label>
+                                <input id="password" type="text" name="password" required maxLength="15"/>
+                                
+                                <button type="submit" onClick = {() => navigate('/account/my-account')}>
+                                    Log In
+                                </button>
+                            </form>
+                            
+                            <button onClick={() => navigate('/account/register')}>
+                                Register
+                            </button>
+                        </>
+                    )}
+                    
                 </div>
+                
             </section>
             <section>
                 <NavigationBar navItems={navItems} />

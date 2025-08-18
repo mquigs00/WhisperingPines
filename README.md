@@ -29,6 +29,6 @@ Update 8.16.25:
 Users can now search the catalog by Author and/or Book Title
 
 Update 8.17.25:
-Users can now click the Books ISBN13 link in the Results table to be routed to that Book's own page to view it's details before checking out.
+Users can now click the Books ISBN13 link in the Results table to be routed to that Book's own page to view it's details before checking out. The Check Out button now displays a popup detailing the details and rules of checking out the given book.
 
 You can view my inital repo here: https://github.com/mquigs00/LibrarySim
